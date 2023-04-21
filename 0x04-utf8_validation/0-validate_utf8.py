@@ -15,7 +15,7 @@ def validUTF8(data) -> bool:
         byte = data[i]
 
         # Determine num of bytes needed to form UTF-8 character
-        if byte < 0b10000000:
+        '''if byte < 0b10000000:
             num_bytes = 1
         elif byte < 0b11100000:
             num_bytes = 2
@@ -25,7 +25,20 @@ def validUTF8(data) -> bool:
             num_bytes = 4
         else:
             # Invalid UTF-8 character
-            return False
+            return False'''
+        if byte >> 7 == 0:
+            num_bytes = 1
+        else:
+            # Count num of consecutive 1's
+            mask = 0b10000000
+            num_bytes = 0
+            while byte & mask:
+                num_bytes += 1
+                mask >>= 1
+
+            # If num_bytes is < 2 or > 4, then it's an invalid UTF-8 character
+            if num_bytes < 2 or num_bytes > 4:
+                return False
 
         if i + num_bytes > len(data):
             return False
