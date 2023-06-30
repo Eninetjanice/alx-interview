@@ -21,7 +21,7 @@ request(url, function (error, response, body) {
     const characterUrls = filmData.characters;
     const characters = [];
 
-    function fetchCharacterData(characterUrl) {
+    function fetchCharacterData (characterUrl) {
       return new Promise((resolve, reject) => {
         request(characterUrl, function (error, response, body) {
           if (error) {
@@ -36,7 +36,7 @@ request(url, function (error, response, body) {
       });
     }
 
-    async function fetchCharacters() {
+    async function fetchCharacters () {
       try {
         for (const characterUrl of characterUrls) {
           const characterName = await fetchCharacterData(characterUrl);
